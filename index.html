@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Backup Text</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #backupText {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function generateBackupText() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const backupText = `backup-${hours}:${minutes}-${day}.${month}.${year}`;
+            document.getElementById('backupText').textContent = backupText;
+        }
+
+        function copyToClipboard() {
+            const textToCopy = document.getElementById('backupText').textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Backup text copied to clipboard!");
+            }).catch(err => {
+                console.error("Could not copy text: ", err);
+            });
+        }
+    </script>
+</head>
+<body>
+    <button class="button" onclick="generateBackupText()">Generate Backup Text</button>
+    <p id="backupText"></p>
+    <button class="button" onclick="copyToClipboard()">Copy to Clipboard</button>
+</body>
+</html>
